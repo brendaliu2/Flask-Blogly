@@ -48,6 +48,10 @@ def add_new_user():
 @app.get('/users/<user_id>')
 def display_user(user_id):
 
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
 
     return render_template('user_id.html', user = user)
+
+
+# @app.get('/users/<user_id>/edit')
+# def display_edit_form():
