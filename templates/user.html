@@ -3,18 +3,21 @@
 {% block title %} Users {% endblock %}
 
 {% block content %}
-
+<h1>Users</h1>
 <!-- create for loop to list all users -->
 {% for user in users %}
+{% if user.archived == False %}
 <li>
   <a href=/users/{{user.id}}>{{user.first_name}} {{user.last_name}}</a>
 </li>
-
+{% endif %}
 {% endfor %}
 
 
 <button><a href="/users/new">Add user</a></button>
 
 
+<!--test_first -->
+<!-- test_last -->
 
 {% endblock %}

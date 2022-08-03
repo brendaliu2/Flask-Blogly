@@ -27,5 +27,8 @@ class User(db.Model):
     image_url= db.Column(db.String(),
                          nullable=True,
                          default = DEFAULT_PIC)
+    archived = db.Column(db.Boolean,
+                        nullable=False,
+                        default = False)
 
 

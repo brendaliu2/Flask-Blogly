@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app, db
-from models import DEFAULT_IMAGE_URL, User
+from models import User
 
 # Let's configure our app to use a different database for tests
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
@@ -58,9 +58,45 @@ class UserViewTestCase(TestCase):
         db.session.rollback()
 
     def test_list_users(self):
+        """Test to show all users page"""
         with self.client as c:
             resp = c.get("/users")
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn("test_first", html)
             self.assertIn("test_last", html)
+
+    def test_redirect_to_users(self):
+        """Test redirect to /users"""
+        with self.client as client:
+            resp = client.get('/', follow_redirects = True)
+            html = resp.get_data(as_text = True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_first", html)
+            self.assertIn("test_last", html)
+
+    def test_display_new_user_form(self):
+        """Test new user form page"""
+        with self.client as client:
+            resp = client.get('users/new')
+            html = resp.get_data(as_text = True)
+
+            self.assertIn('new_user', html)
+
+    def test_delete_user(self):
+        """Test delete user redirect"""
+        with self.client as client:
+
+            resp = client.post(f'/users/{self.user_id}/delete',
+                              follow_redirects = True)
+            html = resp.get_data(as_text = True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("test_first", html)
+            self.assertIn("test_last", html)
+
+
+
+
+

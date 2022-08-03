@@ -9,7 +9,10 @@
 <img src={{user.image_url}} alt="user profile picture" width="100" height="100">
 
 <button><a href=/users/{{user.id}}/edit>Edit</a></button>
-<button><a href=/users/{{user.id}}/delete>Delete</a></button>
+<form action="/users/{{user.id}}/delete" method="POST">
+  <button>Delete</button>
+</form>
+
 
 
 
