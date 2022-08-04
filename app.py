@@ -25,6 +25,7 @@ def redirect_to_users():
 def show_all_users():
     """Displays list of users page"""
     users = User.query.all()
+
     return render_template('user.html', users = users)
 
 @app.get('/users/new')
@@ -56,9 +57,10 @@ def display_user(user_id):
 
     user = User.query.get_or_404(user_id)
     # name = user.get_full_name()
+    # db.session.commit() why do we not need to commit in jinja?
 
+    # return render_template('user_id.html', user = user)
     return render_template('user_id.html', user = user)
-    # return render_template('user_id.html', name = name, user_id = user_id)
 
 @app.get('/users/<user_id>/edit')
 def display_edit_form(user_id):
