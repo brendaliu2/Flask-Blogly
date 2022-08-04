@@ -58,3 +58,4 @@ class Post(db.Model):
 
     user = db.relationship('User')
 
+# could have user id that is null line 56 (unknown author)
