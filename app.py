@@ -55,9 +55,10 @@ def display_user(user_id):
     """Displays current user"""
 
     user = User.query.get_or_404(user_id)
+    # name = user.get_full_name()
 
     return render_template('user_id.html', user = user)
-
+    # return render_template('user_id.html', name = name, user_id = user_id)
 
 @app.get('/users/<user_id>/edit')
 def display_edit_form(user_id):
@@ -71,16 +72,9 @@ def edit_user(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    # TODO: refactor into a function in models?
-
-    if request.form['first-name']:
-        user.first_name = request.form['first-name']
-
-    if request.form['last-name']:
-        user.last_name = request.form['last-name']
-
-    if request.form['image']:
-     user.image_url = request.form['image']
+    user.first_name = request.form['first-name']
+    user.last_name = request.form['last-name']
+    user.image_url = request.form['image']
 
     db.session.commit()
 
@@ -92,7 +86,8 @@ def delete_user(user_id):
     """Archives user and redirects to list of users page"""
 
     user = User.query.get_or_404(user_id)
-    user.archived = True
+    # user.archived = True
+    db.session.delete(user)
     db.session.commit()
 
     return redirect('/users')
