@@ -56,5 +56,5 @@ class Post(db.Model):
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.id'))
 
-    # users = db.relationship('User')
+    users = db.relationship('User')
 

@@ -56,13 +56,9 @@ def display_user(user_id):
     """Displays current user"""
 
     user = User.query.get_or_404(user_id)
-    # name = user.get_full_name()
-    # db.session.commit() why do we not need to commit in jinja?
-    posts = Post.query.filter_by(user_id = user_id)
-    # why is it one equal sign instead of two
-    # why when filter(user_id == user_id) it shows all posts regardless of user_id
 
-    # return render_template('user_id.html', user = user)
+    posts = Post.query.filter(Post.user_id == user_id)
+
     return render_template('user_id.html', user = user, posts = posts)
 
 @app.get('/users/<user_id>/edit')
@@ -105,9 +101,30 @@ def show_new_post_form(user_id):
 
     return render_template('new_post.html', user = user)
 
+@app.post('/users/<user_id>/posts/new')
+def add_new_post(user_id):
+    """Adds new post for user"""
+
+    title = request.form['title']
+    content = request.form['content']
+
+    new_post = Post(title = title,
+                    content = content,
+                    user_id = user_id)
+
+    db.session.add(new_post)
+    db.session.commit()
 
 
+    return redirect (f'/users/{user_id}')
 
+@app.get('/posts/<post_id>')
+def show_post(post_id):
 
+    post = Post.query.get_or_404(post_id)
+    user = User.query.get_or_404(post.user_id)
+    # how to get user name without querying User?
+
+    return render_template('/show_post.html', post = post, user = user)
 
 
