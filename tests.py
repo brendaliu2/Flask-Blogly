@@ -141,7 +141,6 @@ class PostViewTestCase(TestCase):
         db.session.commit()
 
         self.user_id = test_user.id
-        # self.name = test_user.get_full_name()
         self.post_id = test_post.id
 
     def tearDown(self):
@@ -165,7 +164,6 @@ class PostViewTestCase(TestCase):
 
 
             self.assertIn("Add Post for test_first test_last", html)
-            # why cannot use f string for self.name
 
     def test_make_post(self):
         """Test making a post"""

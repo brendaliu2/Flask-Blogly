@@ -57,9 +57,9 @@ def display_user(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    posts = Post.query.filter(Post.user_id == user_id)
 
-    return render_template('user_id.html', user = user, posts = posts)
+
+    return render_template('user_id.html', user = user)
 
 @app.get('/users/<user_id>/edit')
 def display_edit_form(user_id):
@@ -88,6 +88,7 @@ def delete_user(user_id):
 
     user = User.query.get_or_404(user_id)
     # user.archived = True
+    # TODO: delete posts of user through query
     db.session.delete(user)
     db.session.commit()
 
@@ -150,6 +151,7 @@ def edit_post(post_id):
 
 @app.post('/posts/<post_id>/delete')
 def delete_post(post_id):
+    """Deletes posts"""
 
     post = Post.query.get_or_404(post_id)
 
@@ -158,3 +160,8 @@ def delete_post(post_id):
 
     return redirect(f'/users/{post.user_id}')
 
+
+
+# p = Post.query
+# latest_posts = p.order_by('created_at').limit(5)
+#
