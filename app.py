@@ -1,7 +1,7 @@
 """Blogly application."""
 
-from flask import Flask, redirect, render_template, render_template_string, request
-from models import db, connect_db, User
+from flask import Flask, redirect, render_template, request
+from models import db, connect_db, User, Post
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -58,9 +58,12 @@ def display_user(user_id):
     user = User.query.get_or_404(user_id)
     # name = user.get_full_name()
     # db.session.commit() why do we not need to commit in jinja?
+    posts = Post.query.filter_by(user_id = user_id)
+    # why is it one equal sign instead of two
+    # why when filter(user_id == user_id) it shows all posts regardless of user_id
 
     # return render_template('user_id.html', user = user)
-    return render_template('user_id.html', user = user)
+    return render_template('user_id.html', user = user, posts = posts)
 
 @app.get('/users/<user_id>/edit')
 def display_edit_form(user_id):
@@ -94,6 +97,13 @@ def delete_user(user_id):
 
     return redirect('/users')
 
+@app.get('/users/<user_id>/posts/new')
+def show_new_post_form(user_id):
+    """Displays new post form"""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('new_post.html', user = user)
 
 
 
