@@ -18,9 +18,9 @@
   <a href ='/posts/{{post.id}}/edit'>Edit</a>
 </button>
 
-<button>
-  <a href ='/posts/{{post.id}}/delete'>Delete</a>
-</button>
+<form action='/posts/{{post.id}}/delete' method="POST">
+  <button>Delete</button>
+</form>
 
 
 {% endblock %}
