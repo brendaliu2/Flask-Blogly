@@ -123,10 +123,8 @@ def show_post(post_id):
     """Shows user's post"""
 
     post = Post.query.get_or_404(post_id)
-    user = User.query.get_or_404(post.user_id)
-    # how to get user name without querying User?
 
-    return render_template('/show_post.html', post = post, user = user)
+    return render_template('/show_post.html', post = post)
 
 @app.get('/posts/<post_id>/edit')
 def show_edit_post_form(post_id):
