@@ -165,3 +165,6 @@ def delete_post(post_id):
 # p = Post.query
 # latest_posts = p.order_by('created_at').limit(5)
 #
+
+# @app.get('/tags')
+# def show_all_tags():

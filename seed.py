@@ -1,4 +1,4 @@
-from models import User, db, Post
+from models import User, db, Post, PostTag, Tag
 from app import app
 
 db.drop_all()
@@ -19,5 +19,16 @@ brenda_post_1 = Post(title = 'Selling Strawberries', content = '$99 each', user_
 
 db.session.add(margaret_post_1)
 db.session.add(brenda_post_1)
+
+db.session.commit()
+
+
+# add tags
+
+fun = Tag(name = 'fun')
+happy = Tag(name = 'happy')
+
+db.session.add(fun)
+db.session.add(happy)
 
 db.session.commit()

@@ -1,5 +1,6 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
@@ -58,4 +59,43 @@ class Post(db.Model):
 
     user = db.relationship('User')
 
+    # post_tag = db.relationship('PostTag', backref= 'post')
+
+
 # could have user id that is null line 56 (unknown author)
+
+
+class Tag(db.Model):
+    """PostTag"""
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer,
+                   primary_key = True,
+                   autoincrement = True)
+    name = db.Column(db.String(),
+                      nullable = False,
+                      unique = True)
+
+
+    posts = db.relationship('Post',
+                            secondary='post_tags',
+                            backref='tags')
+
+    # post_tag = db.relationship('PostTag', backref= 'tag')
+
+class PostTag(db.Model):
+    """Tag"""
+
+    __tablename__ = 'post_tags'
+
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey('posts.id'),
+                        primary_key = True)
+    tag_id = db.Column(db.Integer,
+                        db.ForeignKey('tags.id'),
+                        primary_key = True)
+
+
+
+
